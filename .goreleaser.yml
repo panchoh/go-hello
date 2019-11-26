@@ -19,7 +19,8 @@ archives:
     386: i386
     amd64: x86_64
 checksum:
-  name_template: 'checksums.txt'
+  name_template: '{{ .ProjectName }}-{{ .Version }}-SHA512SUMS'
+  algorithm: sha512
 snapshot:
   name_template: "{{ .Tag }}-next"
 changelog:
@@ -28,3 +29,7 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+signs:
+  - artifacts: checksum
+    signature: "${artifact}.GPG"
+    args: ["--batch", "--local-user", "pancho@pancho.name", "--output", "${signature}", "--armor", "--clear-sign", "${artifact}"]
