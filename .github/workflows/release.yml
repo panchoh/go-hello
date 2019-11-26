@@ -16,9 +16,13 @@ jobs:
       with:
         go-version: 1.13.5
 
+    - name: Identify current version
+      id: get-version
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
     - uses: goreleaser/goreleaser-action@v1
       with:
-        args: release --rm-dist
+        args: release --rm-dist --release-notes docs/release-notes/RELEASE-${{ steps.get-version.outputs.VERSION }}.md
         key: ${{ secrets.KEY }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
