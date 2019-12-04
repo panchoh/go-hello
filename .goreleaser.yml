@@ -24,12 +24,6 @@ builds:
     - goos: darwin
       goarch: 386
 archives:
-- replacements:
-    darwin: Darwin
-    linux: Linux
-    windows: Windows
-    386: i386
-    amd64: x86_64
 checksum:
   name_template: '{{ .ProjectName }}-{{ .Version }}-SHA512SUMS'
   algorithm: sha512
