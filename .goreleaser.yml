@@ -8,6 +8,7 @@ before:
     - go generate ./...
 builds:
 - flags:
+    - -buildmode=pie
     - -trimpath
   env:
     - CGO_ENABLED=0
