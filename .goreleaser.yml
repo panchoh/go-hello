@@ -29,6 +29,8 @@ builds:
     - goos: darwin
       goarch: 386
 archives:
+- files:
+    - none*
 - format: binary
   format_overrides:
     - goos: windows
