@@ -41,5 +41,13 @@ changelog:
       - '^test:'
 signs:
   - artifacts: checksum
-    signature: "${artifact}.GPG"
-    args: ["--batch", "--local-user", "pancho@pancho.name", "--output", "${signature}", "--armor", "--clear-sign", "${artifact}"]
+    signature: $artifact.GPG
+    args:
+      - --batch
+      - --local-user
+      - pancho@pancho.name
+      - --output
+      - $signature
+      - --armor
+      - --clear-sign
+      - $artifact
