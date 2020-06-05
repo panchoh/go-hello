@@ -22,9 +22,16 @@ jobs:
         RELNOTES="docs/release-notes/RELEASE-${GITHUB_REF#refs/tags/}.md"
         [[ -f "$RELNOTES" ]] && echo ::set-output name=ARGS::--release-notes $RELNOTES || true
 
-    - uses: goreleaser/goreleaser-action@v1
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v2
+      env:
+        GPG_PRIVATE_KEY: ${{ secrets.KEY }}
+        # GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        # PASSPHRASE: ${{ secrets.PASSPHRASE }}
+
+    - uses: goreleaser/goreleaser-action@v2
       with:
         args: release --rm-dist ${{ steps.release-notes.outputs.ARGS }}
-        key: ${{ secrets.KEY }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
