@@ -10,10 +10,6 @@ builds:
 - flags:
     - -buildmode=pie
     - -trimpath
-  flags_overrides:
-    - goos: windows
-      flags:
-        - -trimpath
   env:
     - CGO_ENABLED=0
   goos:
