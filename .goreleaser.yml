@@ -26,8 +26,10 @@ builds:
       goarch: 386
 archives:
 - files:
+  id: dummy
     - none*
 - format: binary
+  id: windows
   format_overrides:
     - goos: windows
       format: zip
