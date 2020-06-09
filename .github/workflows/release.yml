@@ -31,12 +31,6 @@ jobs:
         # GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
         # PASSPHRASE: ${{ secrets.PASSPHRASE }}
 
-    - name: Check GO_VERSION
-      run: |
-        echo $GO_VERSION
-      env:
-        GO_VERSION: ${{ steps.setup-go.inputs.go-version }}
-
     - uses: goreleaser/goreleaser-action@v2
       with:
         args: release --rm-dist ${{ steps.release-notes.outputs.ARGS }}
