@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - v*.*.*
+env:
+  GO_VERSION: 1.14.4
 
 jobs:
   build:
@@ -12,10 +14,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+
     - uses: actions/setup-go@v2
       id: setup-go
       with:
-        go-version: 1.14.4
+        go-version: ${{ env.GO_VERSION }}
+
+    - name: Check env
+      run: |
+        echo "$GO_VERSION"
 
     - name: Select custom release notes
       id: release-notes
@@ -36,4 +43,3 @@ jobs:
         args: release --rm-dist ${{ steps.release-notes.outputs.ARGS }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GO_VERSION ${{ steps.setup-go.inputs.go-version }}
