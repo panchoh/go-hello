@@ -39,7 +39,7 @@ jobs:
         Key-Length: 4096
         Key-Usage: sign
         Name-Real: Kapow! Release Bot
-        Name-Comment: "${GITHUB_REF#refs/tags/}"
+        Name-Comment: ${GITHUB_REF#refs/tags/}
         Name-Email: pancho@pancho.name
         Expire-Date: 1d
         %echo done
