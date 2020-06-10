@@ -42,7 +42,7 @@ jobs:
         Key-Usage: sign
         Name-Real: Kapow! Release Bot
         Name-Comment: $COMMENT
-        Name-Email: release-bot@kapow
+        Name-Email: pancho@pancho.name
         Expire-Date: 1y
         %echo done
         EOF
