@@ -48,7 +48,7 @@ signs:
     args:
       - --batch
       - --local-user
-      - pancho@pancho.name
+      - release-bot@go-hello
       - --output
       - $signature
       - --armor

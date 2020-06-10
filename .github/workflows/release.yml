@@ -38,9 +38,9 @@ jobs:
         Key-Type: RSA
         Key-Length: 4096
         Key-Usage: sign
-        Name-Real: Kapow! Release Bot
+        Name-Real: go-hello Release Bot
         Name-Comment: ${GITHUB_REF#refs/tags/}
-        Name-Email: pancho@pancho.name
+        Name-Email: release-bot@go-hello
         Expire-Date: 1d
         %echo done
         EOF
