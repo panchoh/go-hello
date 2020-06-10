@@ -30,13 +30,22 @@ jobs:
         RELNOTES="docs/release-notes/RELEASE-${GITHUB_REF#refs/tags/}.md"
         [[ -f "$RELNOTES" ]] && echo ::set-output name=ARGS::--release-notes $RELNOTES || true
 
-    - name: Import GPG key
-      id: import_gpg
-      uses: crazy-max/ghaction-import-gpg@v2
-      env:
-        GPG_PRIVATE_KEY: ${{ secrets.KEY }}
-        # GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-        # PASSPHRASE: ${{ secrets.PASSPHRASE }}
+    - name: Generate release signing key
+      run: |
+        gpg --batch --generate-key <<"EOF"
+        %echo Generating a signing OpenPGP key
+        %no-protection
+        Key-Type: RSA
+        Key-Length: 4096
+        Key-Usage: sign
+        Name-Real: Kapow! Release Bot
+        Name-Comment: ${GITHUB_REF#refs/tags/}
+        Name-Email: release-bot@kapow
+        Expire-Date: 1y
+        %echo done
+        EOF
+
+    - name: Import
 
     - uses: goreleaser/goreleaser-action@v2
       with:
