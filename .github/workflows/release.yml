@@ -81,6 +81,27 @@ jobs:
         puts "Done."
         EOF
 
+    - name: Clone gh-pages branch to release-keys dir
+      run: |
+        git clone -b gh-pages --depth 1 https://github.com/panchoh/go-hello.git release-keys
+        rm -rf release-keys/.git
+
+    - name: Export public GPG key
+      run: |
+        gpg --no-tty --armor --output release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg --export pancho@pancho.name
+        echo release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg >> release-keys/index.txt
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./release-keys
+        keep_files: true
+
+    - name: Clean release-keys dir
+      run: |
+        rm -rf release-keys
+
     - uses: goreleaser/goreleaser-action@v2
       with:
         args: release --rm-dist ${{ steps.release-notes.outputs.ARGS }}
