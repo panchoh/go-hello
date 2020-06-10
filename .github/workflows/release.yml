@@ -83,7 +83,7 @@ jobs:
 
     - name: Clone gh-pages branch to release-keys dir
       run: |
-        git clone -b gh-pages --depth 1 https://github.com/panchoh/go-hello.git release-keys
+        git clone -b gh-pages --depth 1 https://github.com/"${{ github.repository }}".git release-keys
         rm -rf release-keys/.git
 
     - name: Export public GPG key
