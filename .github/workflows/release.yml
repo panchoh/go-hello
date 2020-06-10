@@ -32,7 +32,7 @@ jobs:
 
     - name: Generate release signing key
       run: |
-        gpg --batch --generate-key <<"EOF"
+        SIGNER=(gpg --batch --generate-key <<-EOF 2>&1 | awk '/^gpg: key [A-Z0-9]* marked as ultimately trusted/ { print $3; exit }'
         %echo Generating a signing OpenPGP key
         %no-protection
         Key-Type: RSA
@@ -43,9 +43,38 @@ jobs:
         Name-Email: release-bot@kapow
         Expire-Date: 1y
         %echo done
-        EOF
+        EOF)
 
-    - name: Import
+        REVOKERS=(
+          7E81EB67E9F9080868F0221BA06E2A1A3F63AA6D # Ruso
+          6AEB3D108D5A257CD9803BF6679F65C4563CF5BA # pancho
+          C916DEB17C72E7DD143FD14244AB0A1631645936 # Héctor
+        )
+        gpg --recv-keys "${REVOKERS[@]}"
+        expect -f- "$SIGNER" "${REVOKERS[@]}" <<'EOF'
+        set SIGNER [lindex $argv 0]
+        set REVOKERS [lrange $argv 1 end]
+
+        if { $SIGNER eq "" || 0 == [llength $REVOKERS] } {
+          puts stderr "usage: addrevokers SIGNER_KEY REVOKER_KEY..."
+          exit 1
+        }
+
+        spawn gpg --command-fd 0 --status-fd 1 --edit-key $SIGNER
+
+        foreach REVOKER $REVOKERS {
+          send "addrevoker\n"
+          expect "GET_LINE keyedit.add_revoker"
+          send "$REVOKER\n"
+          expect "GET_BOOL keyedit.add_revoker.okay"
+          send "y\n"
+          expect "GET_LINE keyedit.prompt"
+        }
+
+        send "save\n"
+        expect eof
+        puts "Done."
+        EOF
 
     - uses: goreleaser/goreleaser-action@v2
       with:
