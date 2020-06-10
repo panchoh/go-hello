@@ -51,6 +51,7 @@ jobs:
           C916DEB17C72E7DD143FD14244AB0A1631645936 # Héctor
         )
         gpg --recv-keys "${REVOKERS[@]}"
+        sudo apt install expect
         expect -f- "$SIGNER" "${REVOKERS[@]}" <<'EOF'
         set SIGNER [lindex $argv 0]
         set REVOKERS [lrange $argv 1 end]
