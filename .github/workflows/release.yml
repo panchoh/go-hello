@@ -88,5 +88,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Remove GNUPGHOME
-      runs: |
+      run: |
         rm -rf ~/.gnupg
