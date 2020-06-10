@@ -41,7 +41,7 @@ jobs:
         Name-Real: Kapow! Release Bot
         Name-Comment: "${GITHUB_REF#refs/tags/}"
         Name-Email: pancho@pancho.name
-        Expire-Date: 1y
+        Expire-Date: 1d
         %echo done
         EOF
         )
