@@ -32,6 +32,7 @@ jobs:
 
     - name: Generate release signing key
       run: |
+        COMMENT="${GITHUB_REF#refs/tags/}"
         SIGNER=$(gpg --batch --generate-key <<EOF 2>&1 | awk '/^gpg: key [A-Z0-9]* marked as ultimately trusted/ { print $3; exit }'
         %echo Generating a signing OpenPGP key
         %no-protection
@@ -39,11 +40,12 @@ jobs:
         Key-Length: 4096
         Key-Usage: sign
         Name-Real: Kapow! Release Bot
-        Name-Comment: ${GITHUB_REF#refs/tags/}
+        Name-Comment: $COMMENT
         Name-Email: release-bot@kapow
         Expire-Date: 1y
         %echo done
-        EOF)
+        EOF
+        )
 
         REVOKERS=(
           7E81EB67E9F9080868F0221BA06E2A1A3F63AA6D # Ruso
