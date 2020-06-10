@@ -32,8 +32,6 @@ jobs:
 
     - name: Generate release signing key
       run: |
-        set -x
-        COMMENT="${GITHUB_REF#refs/tags/}"
         SIGNER=$(gpg --batch --generate-key <<EOF 2>&1 | awk '/^gpg: key [A-Z0-9]* marked as ultimately trusted/ { print $3; exit }'
         %echo Generating a signing OpenPGP key
         %no-protection
@@ -41,19 +39,22 @@ jobs:
         Key-Length: 4096
         Key-Usage: sign
         Name-Real: Kapow! Release Bot
-        Name-Comment: $COMMENT
+        Name-Comment: "${GITHUB_REF#refs/tags/}"
         Name-Email: pancho@pancho.name
         Expire-Date: 1y
         %echo done
         EOF
         )
 
-        REVOKERS=(
-          7E81EB67E9F9080868F0221BA06E2A1A3F63AA6D # Ruso
-          6AEB3D108D5A257CD9803BF6679F65C4563CF5BA # pancho
-          C916DEB17C72E7DD143FD14244AB0A1631645936 # Héctor
-        )
-        gpg --recv-keys "${REVOKERS[@]}"
+        declare -a REVOKERS
+
+        for revoker in .github/revokers/*
+        do
+          gpg --import "$revoker"
+          FINGERPRINT=$(basename $revoker .gpg)
+          REVOKERS+=($FINGERPRINT)
+        done
+
         sudo apt install expect
         expect -f- "$SIGNER" "${REVOKERS[@]}" <<'EOF'
         set SIGNER [lindex $argv 0]
@@ -85,3 +86,7 @@ jobs:
         args: release --rm-dist ${{ steps.release-notes.outputs.ARGS }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Remove GNUPGHOME
+      runs: |
+        rm -rf ~/.gnupg
