@@ -32,6 +32,7 @@ jobs:
 
     - name: Generate release signing key
       run: |
+        set -x
         COMMENT="${GITHUB_REF#refs/tags/}"
         SIGNER=$(gpg --batch --generate-key <<EOF 2>&1 | awk '/^gpg: key [A-Z0-9]* marked as ultimately trusted/ { print $3; exit }'
         %echo Generating a signing OpenPGP key
