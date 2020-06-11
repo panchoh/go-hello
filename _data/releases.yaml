@@ -1,19 +1,10 @@
 releases:
-  - name: v0.1.0
-    description: pos eso la release v0.1.0
-  - name: v0.2.0
-    description: pos eso la release v0.2.0
-  - name: v0.2.0
-    description: pos eso la release v0.2.0
-  - name: v0.2.1
-    description: pos eso la release v0.2.1
-  - name: v0.3.0
-    description: pos eso la release v0.3.0
-  - name: v0.4.0
-    description: pos eso la release v0.4.0
-  - name: v0.4.1
-    description: pos eso la release v0.4.1
-  - name: v0.4.2
-    description: pos eso la release v0.4.2
-  - name: v0.4.3
-    description: pos eso la release v0.4.3
+- v0.1.0
+- v0.2.0
+- v0.2.0
+- v0.2.1
+- v0.3.0
+- v0.4.0
+- v0.4.1
+- v0.4.2
+- v0.4.3

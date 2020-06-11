@@ -1,7 +1,7 @@
 title: Hello Go Project
 #email: your-email@example.com
 baseurl: "/hello-go"
-url: "https://hhurtado.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://panchoh.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 #theme: none

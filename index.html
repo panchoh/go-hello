@@ -8,13 +8,11 @@ permalink: /
   <body>
 
     <h1>Hello Go!</h1>
-    <p>These are the available releases:</p>
-
-    {% for rel in site.data.releases.releases %}
-    <div>
-      <h3><a href="keys/{{ rel.name }}.gpg">{{ rel.name }}</a></h3>
-      <p>{{ rel.description }}</p>
-    </div>
+    <p>Available release keys:</p>
+    <ul>
+    {% for release in site.data.releases.releases reversed %}
+      <li><a href="keys/release-key-{{ release }}.gpg">release-key-{{ release }}.gpg</a></li>
     {% endfor %}
+    </ul>
   </body>
 </html>
