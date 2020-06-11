@@ -40,7 +40,7 @@ jobs:
 
     - name: Check if release key already exists
       run: |
-        [[ -e release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg ]] && echo 'Release key already exists!' && exit 1
+        [[ -e release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg ]] && echo 'Release key already exists!' || true
 
     - name: Generate release signing key
       run: |
