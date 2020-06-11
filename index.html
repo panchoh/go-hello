@@ -1,0 +1,20 @@
+---
+permalink: /
+---
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+
+    <h1>Hello Go!</h1>
+    <p>These are the available releases:</p>
+
+    {% for rel in site.data.releases.releases %}
+    <div>
+      <h3><a href="keys/{{ rel.name }}.gpg">{{ rel.name }}</a></h3>
+      <p>{{ rel.description }}</p>
+    </div>
+    {% endfor %}
+  </body>
+</html>
