@@ -12,6 +12,10 @@ Debido a las restricciones de tiempo (limitaciones del CVS y burrocracia, princi
 
 ## Proceso general
 
+El proceso general es conocido, usammos una clave privada para generar una firma sobre los artefactos generados de manera que los posteriores usuarios puedan verificar el origen de los mismos. La firma es un ficher que se almacena junto a los artefacos y que son verificables mediante el uso de una clave pública que se almacena en otro lugar.
+
+El principal problema con este proceso es la custodia de la clave provada de firma que tiene que estar accesible desde el motor de CI/CD, esto presenta el riesgo de compromiso de dicha clave.
+Partimos de la existencia de una serie de claves de las personas con potestad de revocar las claves de firma release
 
 
 ## Mejoras
@@ -22,11 +26,12 @@ Debido a las restricciones de tiempo (limitaciones del CVS y burrocracia, princi
 
 ### Publicar la clave y el artefacto en distintos repositorios con acceso sólo desde la herramienta de CI/CD
 
+### Claves firmadas por una entidad de confianza
 
 
 ## PDTE.
 
-Generación de imágen para la construcción y firma que contenga las claves
+Generación de imagen para la construcción y firma que contenga las claves
 
 Usar un action que verifique que las firmas a usar estén reconocidas por el banco
 
