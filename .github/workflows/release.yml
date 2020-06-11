@@ -28,21 +28,21 @@ jobs:
         RELNOTES="docs/release-notes/RELEASE-${GITHUB_REF#refs/tags/}.md"
         [[ -f "$RELNOTES" ]] && echo ::set-output name=ARGS::--release-notes $RELNOTES || true
 
-    - name: Clone gh-pages branch to release-keys dir
+    - name: Clone gh-pages branch to static dir
       uses: actions/checkout@v2
       with:
         ref: gh-pages
-        path: release-keys
+        path: static
         clean: false
         persist-credentials: false
 
     - name: Remove .git from gh-pages checkout
       run: |
-        rm -rf release-keys/.git
+        rm -rf static/.git
 
     - name: Check if release key already exists
       run: |
-        [[ -e release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg ]] && echo 'Release key already exists!' && exit 1 || true
+        [[ -e static/keys/release-key-"${GITHUB_REF#refs/tags/}".gpg ]] && echo 'Release key already exists!' && exit 1 || true
 
     - name: Generate release signing key
       run: |
@@ -97,19 +97,20 @@ jobs:
 
     - name: Export public GPG key
       run: |
-        gpg --no-tty --armor --output release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg --export pancho@pancho.name
-        echo release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg >> release-keys/index.txt
+        gpg --no-tty --armor --output static/keys/release-key-"${GITHUB_REF#refs/tags/}".gpg --export pancho@pancho.name
+        echo "- ${GITHUB_REF#refs/tags/}" >> static/_data/releases.yaml
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./release-keys
+        publish_dir: ./static
         keep_files: true
+        enable_jekyll: true
 
-    - name: Clean release-keys dir
+    - name: Clean static dir
       run: |
-        rm -rf release-keys
+        rm -rf static
 
     - uses: goreleaser/goreleaser-action@v2
       with:
