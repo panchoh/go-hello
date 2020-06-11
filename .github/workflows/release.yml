@@ -20,10 +20,6 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    - name: Check env
-      run: |
-        echo "$GO_VERSION"
-
     - name: Select custom release notes
       id: release-notes
       run: |
