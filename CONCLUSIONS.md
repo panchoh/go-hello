@@ -51,6 +51,6 @@ Por último, para garantizar el origen de los artefactos de la release, sería c
 
 Generación de imagen para la construcción y firma que contenga las claves
 
-Usar un action que verifique que las firmas a usar estén reconocidas por el banco
+Usar un github action que verifique que las firmas a usar estén reconocidas por el banco
 
 Firmar con clave del banco la clave pública de la release
