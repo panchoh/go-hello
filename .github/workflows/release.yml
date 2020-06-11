@@ -78,8 +78,15 @@ jobs:
         EOF
 
     - name: Clone gh-pages branch to release-keys dir
+      uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+        path: release-keys
+        clean: false
+        persist_credentials: false
+
+    - name: Remove .git from gh-pages checkout
       run: |
-        git clone -b gh-pages --depth 1 https://github.com/"${{ github.repository }}".git release-keys
         rm -rf release-keys/.git
 
     - name: Export public GPG key
