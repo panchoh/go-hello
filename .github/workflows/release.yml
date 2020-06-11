@@ -91,6 +91,7 @@ jobs:
 
     - name: Export public GPG key
       run: |
+        [[ -e release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg ]] && echo 'Release key already exists!' && exit 1
         gpg --no-tty --armor --output release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg --export pancho@pancho.name
         echo release-keys/release-key-"${GITHUB_REF#refs/tags/}".gpg >> release-keys/index.txt
 
