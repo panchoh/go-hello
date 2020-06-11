@@ -10,7 +10,7 @@ El objetivo es establecer un procedimiento quer permita la generación de una vi
 
 Debido a las restricciones de tiempo (limitaciones del CVS y burrocracia, principalmente) se ha implementado un procedimiento con varias carencias y se dan posteriormente otros escenarios que van incrementando progresivamente la seguridasd del proceso.
 
-## Proceso general
+## Proceso
 
 El proceso general es conocido, usammos una clave privada para generar una firma sobre los artefactos generados de manera que los posteriores usuarios puedan verificar el origen de los mismos. La firma es un ficher que se almacena junto a los artefacos y que son verificables mediante el uso de una clave pública que se almacena en otro lugar.
 
