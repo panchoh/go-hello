@@ -1,2 +1,3 @@
 release-keys/release-key-v0.9.0.gpg
 release-keys/release-key-v0.10.0.gpg
+release-keys/release-key-v0.12.0.gpg
