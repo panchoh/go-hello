@@ -32,7 +32,7 @@ jobs:
         ref: gh-pages
         path: release-keys
         clean: false
-        persist_credentials: false
+        perlist-credentials: false
 
     - name: Remove .git from gh-pages checkout
       run: |
