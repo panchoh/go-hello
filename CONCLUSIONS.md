@@ -48,17 +48,47 @@ riesgo de compromiso de dicha clave.
 
 ### Publicar la clave mediante pull request en el mismo repositorio
 
+Actualmente el proceso se ejecuta en un único pieline que realiza todos los
+pasos, con un commit adicional para la publicación de la clave pública. Esto
+plantea el problema de que si se comprometen las credenciales de Github de un
+miembro del equipo con permisos se podría generar una release no autorizada
+
+Una primera posibilidad es la de proteger la rama (nadie puede hacer push) que
+almacena las claves públicas y requerir de una pull request para añadir
+modificaciones, esta pull request necesitaría luego de la aprobación por parte
+de más de un miembro para poderse integrar en dicha rama. De esta manera sería
+necesaria la intervención de más de un miembro (habría que comprometer más de
+unas credenciales)
+
 ### Publicar la clave mediante pull request en otro repositorio
+
+Una subsiguiente mejora sería la de que las claves residieran en otro
+repositorio distinto (obviamente con distintas credenciales). De esta manera
+habría que comprometer más de unas credenciales, incluso de una persona, para
+poder publicar una release fake.
 
 ### Publicar la clave y el artefacto en distintos repositorios con acceso sólo desde la herramienta de CI/CD
 
+La siguiente mejora es la de restringir los permisos de publicación a la
+herramienta de CI/CD, con esta separación de responsabilidades se eliminaría la
+intervancion manual y sería necesario comprometer dos credenciales distintas
+(una de ellas de servicio)
+
 ### Claves firmadas por una entidad de confianza
+
+Por último, para garantizar el origen de los artefactos de la release, sería
+conveniente que la clave usada para la firma se obtuviera de una fuente de
+confianza por parte de los consumidores de manera que garantizara el origen de
+la misma. Para esto se podría mantener la publicación mediante pull request y
+que el commit estuviera firmado con una clave que genere esta relación de
+confianza (el usuario que acepta la PR tiene una clave que a su vez esté
+firmada por BBVA)
 
 ## PDTE
 
 Generación de imagen para la construcción y firma que contenga las claves
 
-Usar un github action que verifique que las firmas a usar estén reconocidas por
+Usar un github action que verifique que las claves a usar estén reconocidas por
 el banco
 
 Usar un bot que contraste los artefactos de las releases publicadas con las
@@ -71,5 +101,3 @@ segundos. Para hacer este flujo posible, la acción de publicación de releases
 debería hacer una draft release, que un humano debería convertir en definitiva
 sólo después de que la clave pública de la misma haya sido publicada en el
 repositorio secundario.
-
-Firmar con clave del banco la clave pública de la release
