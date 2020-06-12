@@ -67,6 +67,9 @@ repositorio distinto (obviamente con distintas credenciales). De esta manera
 habría que comprometer más de unas credenciales, incluso de una persona, para
 poder publicar una release fake.
 
+Otra opción es que el repo no tenga acceso de escritura y que solo se pueda
+modificar mediante pull request
+
 ### Publicar la clave y el artefacto en distintos repositorios con acceso sólo desde la herramienta de CI/CD
 
 La siguiente mejora es la de restringir los permisos de publicación a la
