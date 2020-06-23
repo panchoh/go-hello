@@ -18,21 +18,24 @@ jobs:
         with:
           ref: master
 
-      - name: Ensure
+      - name: Ensure we are using the latest Go available
         id: ensure-go
-        uses: jmhodges/ensure-latest-go@v1.0.2
-
-      - name: Compose a title for the PR
-        id: pr-title
         run: |
-          echo "##[set-output name=pr-title;]update to latest Go release ${{ steps.ensure-go.outputs.go_version}}"
+          go_version="$(
+            curl --silent 'https://golang.org/dl/?mode=json' \
+            | jq -r '.[0].version'                           \
+            | tr -d 'go'                                     \
+            | tee -a .github/versions/go
+          )"
+          echo "::set-output name=go-version::$go_version"
+          echo "::set-output name=pr-title::update to latest Go release $go_version"
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v2
         with:
-          title: ${{ steps.pr-title.outputs.pr-title }}
-          body: Auto-generated pull request created by the GitHub Actions [create-pull-request](https://github.com/peter-evans/create-pull-request) and [ensure-latest-go](https://github.com/jmhodges/ensure-latest-go).
-          commit-message: ${{ steps.pr-title.outputs.pr-title }}
+          title: ${{ steps.ensure-go.outputs.pr-title }}
+          body: Auto-generated pull request created by the GitHub Action [create-pull-request](https://github.com/peter-evans/create-pull-request).
+          commit-message: ${{ steps.ensure-go.outputs.pr-title }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ensure-latest-go/patch-${{ steps.ensure-go.outputs.go_version }}
+          branch: ensure-latest-go/patch-${{ steps.ensure-go.outputs.go-version }}
           base: master
