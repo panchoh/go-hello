@@ -22,7 +22,7 @@ jobs:
             curl --silent 'https://golang.org/dl/?mode=json' \
             | jq -r '.[0].version'                           \
             | tr -d 'go'                                     \
-            | tee -a .github/versions/go
+            | tee .github/versions/go
           )"
           echo "::set-output name=go-version::$go_version"
           echo "::set-output name=pr-title::chore: bump Go version to $go_version"
