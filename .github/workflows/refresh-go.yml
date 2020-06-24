@@ -32,4 +32,4 @@ jobs:
         with:
           title: ${{ steps.refresh-go.outputs.pr-title }}
           commit-message: ${{ steps.refresh-go.outputs.pr-title }}
-          branch: refresh-go/patch-${{ steps.ensure-latest-go.outputs.go-version }}
+          branch: refresh-go/patch-${{ steps.refresh-go.outputs.go-version }}
