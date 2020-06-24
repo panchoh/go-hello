@@ -28,8 +28,5 @@ jobs:
         uses: peter-evans/create-pull-request@v2
         with:
           title: ${{ steps.refresh-go.outputs.pr-title }}
-          body: Auto-generated pull request created by the GitHub Action [create-pull-request](https://github.com/peter-evans/create-pull-request).
           commit-message: ${{ steps.refresh-go.outputs.pr-title }}
-          token: ${{ secrets.GITHUB_TOKEN }}
           branch: refresh-go/patch-${{ steps.ensure-latest-go.outputs.go-version }}
-          base: master
