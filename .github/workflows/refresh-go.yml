@@ -22,7 +22,7 @@ jobs:
             | tee -a .github/versions/go
           )"
           echo "::set-output name=go-version::$go_version"
-          echo "::set-output name=pr-title::update to latest Go release $go_version"
+          echo "::set-output name=pr-title::chore: bump Go to $go_version"
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v2
