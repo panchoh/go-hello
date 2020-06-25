@@ -14,8 +14,6 @@ jobs:
       - name: Ensure we are using the latest Go release available
         id: go-bump
         uses: panchoh/go-bump@master
-        with:
-          go-version-path: .github/versions/go
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v2
