@@ -11,7 +11,7 @@ jobs:
       - name: Clone current repo
         uses: actions/checkout@v2
 
-      - name: Ensure we are using the latest Go release available
+      - name: Bump Go
         id: go-bump
         uses: panchoh/go-bump@master
 
