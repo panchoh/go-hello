@@ -4,7 +4,7 @@ on:
     - cron: 00 9 * * *
   push:
     branches:
-      - master
+      - main
 
 jobs:
   bump-go:
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Clone current repo
         uses: actions/checkout@v2
-        with:
-          ref: master
 
       - name: Ensure we are using the latest Go release available
         id: bump-go

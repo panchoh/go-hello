@@ -2,7 +2,7 @@ name: Bump Go
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   bump-go:
