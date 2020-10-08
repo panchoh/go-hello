@@ -12,8 +12,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Bump Go
-        id: go-bump
-        uses: panchoh/go-bump@master
+        id: bump-go
+        uses: BBVA/bump-go@main
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v2
