@@ -7,14 +7,14 @@ on:
       - main
 
 jobs:
-  bump-go:
+  bump-go-inline:
     runs-on: ubuntu-20.04
     steps:
       - name: Clone current repo
         uses: actions/checkout@v2
 
       - name: Ensure we are using the latest Go release available
-        id: bump-go
+        id: bump-go-inline
         run: |
           go_version_file=.github/versions/go
           old_go_version=$(< $go_version_file)
@@ -33,6 +33,6 @@ jobs:
         with:
           author: GitHub <noreply@github.com>
           title: Bump Go version
-          commit-message: ${{ steps.bump-go.outputs.pr-title }}
-          branch: bump-go/patch
+          commit-message: ${{ steps.bump-go-inline.outputs.pr-title }}
+          branch: bump-go-inline/patch
           delete-branch: true
