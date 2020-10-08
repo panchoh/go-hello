@@ -16,8 +16,10 @@ jobs:
         uses: BBVA/bump-go@main
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v2
+        uses: peter-evans/create-pull-request@v3
         with:
-          title: ${{ steps.go-bump.outputs.pr-title }}
-          commit-message: ${{ steps.go-bump.outputs.pr-title }}
-          branch: ${{ steps.go-bump.outputs.branch-name }}
+          author: GitHub <noreply@github.com>
+          title: Bump Go version
+          commit-message: "chore: bump Go version to ${{ steps.bump-go.outputs.go-version }}"
+          branch: bump-go/patch
+          delete-branch: true
