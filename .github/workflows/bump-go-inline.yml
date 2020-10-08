@@ -1,4 +1,4 @@
-name: Ensure current Go compiler
+name: Bump Go - inline
 on:
   schedule:
     - cron: 00 9 * * *
