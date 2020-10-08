@@ -13,7 +13,7 @@ jobs:
 
       - name: Bump Go
         id: go-bump
-        uses: panchoh/go-bump@master
+        uses: BBVA/bump-go@main
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v2
