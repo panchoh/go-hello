@@ -5,7 +5,7 @@ on:
       - master
 
 jobs:
-  go-bump:
+  bump-go:
     runs-on: ubuntu-20.04
     steps:
       - name: Clone current repo

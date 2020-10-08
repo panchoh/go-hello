@@ -1,0 +1,40 @@
+name: Ensure current Go compiler
+on:
+  schedule:
+    - cron: 00 9 * * *
+  push:
+    branches:
+      - master
+
+jobs:
+  bump-go:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone current repo
+        uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Ensure we are using the latest Go release available
+        id: bump-go
+        run: |
+          go_version_file=.github/versions/go
+          old_go_version=$(< $go_version_file)
+
+          curl --silent --fail 'https://golang.org/dl/?mode=json'         \
+          | jq --raw-output --exit-status '.[0].version | sub("^go"; "")' \
+          > $go_version_file
+
+          new_go_version=$(< $go_version_file)
+          pr_title="chore: bump Go version from $old_go_version to $new_go_version"
+          echo ::set-output name=go-version::$new_go_version
+          echo ::set-output name=pr-title::$pr_title
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          author: GitHub <noreply@github.com>
+          title: Bump Go version
+          commit-message: ${{ steps.bump-go.outputs.pr-title }}
+          branch: bump-go/patch
+          delete-branch: true
